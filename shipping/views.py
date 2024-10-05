@@ -1,8 +1,18 @@
+from drf_yasg.utils import swagger_auto_schema
+from rest_framework import status
+from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializers import FurnitureMovingSerializer, ShippingRequestSerializer, ConstructionRequestSerializer
+
+from .serializers import FurnitureMovingSerializer, ShippingRequestSerializer, ConstructionRequestSerializer, \
+    VehicleBookingSerializer
+from .serializers import PersonalShipmentSerializer, CrossBorderFreightSerializer
 
 
 class FurnitureMovingRequest(APIView):
+    @swagger_auto_schema(
+        request_body=FurnitureMovingSerializer,
+        responses={201: "Furniture Moving Request received successfully", 400: "Validation Error"}
+    )
     def post(self, request):
         serializer = FurnitureMovingSerializer(data=request.data)
         if serializer.is_valid():
@@ -15,6 +25,10 @@ class FurnitureMovingRequest(APIView):
 
 
 class ShippingRequest(APIView):
+    @swagger_auto_schema(
+        request_body=ShippingRequestSerializer,
+        responses={201: "Shipping Request received successfully", 400: "Validation Error"}
+    )
     def post(self, request):
         serializer = ShippingRequestSerializer(data=request.data)
         if serializer.is_valid():
@@ -27,6 +41,10 @@ class ShippingRequest(APIView):
 
 
 class ConstructionRequest(APIView):
+    @swagger_auto_schema(
+        request_body=ConstructionRequestSerializer,
+        responses={201: 'Construction Request received successfully', 400: 'Validation Error'}
+    )
     def post(self, request):
         serializer = ConstructionRequestSerializer(data=request.data)
         if serializer.is_valid():
@@ -38,15 +56,12 @@ class ConstructionRequest(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
-from .models import PersonalShipmentModel, CrossBorderFreightModel
-from .serializers import PersonalShipmentSerializer, CrossBorderFreightSerializer
-
-
 # Personal Shipment View
 class PersonalShipmentRequest(APIView):
+    @swagger_auto_schema(
+        request_body=PersonalShipmentSerializer,
+        responses={201: "Personal Shipment Request received successfully", 400: "Validation Error"}
+    )
     def post(self, request):
         serializer = PersonalShipmentSerializer(data=request.data)
         if serializer.is_valid():
@@ -60,12 +75,32 @@ class PersonalShipmentRequest(APIView):
 
 # Cross Border Freight View
 class CrossBorderFreightRequest(APIView):
+    @swagger_auto_schema(
+        request_body=CrossBorderFreightSerializer,
+        responses={201: "Cross Border Freight Request received successfully", 400: "Validation Error"}
+    )
     def post(self, request):
         serializer = CrossBorderFreightSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(
                 {"message": "Cross Border Freight request received successfully", "data": serializer.data},
+                status=status.HTTP_201_CREATED
+            )
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class VehicleBookingRequest(APIView):
+    @swagger_auto_schema(
+        request_body=VehicleBookingSerializer,
+        responses={201: "Vehicle Booking Request received successfully", 400: "Validation Error"}
+    )
+    def post(self, request):
+        serializer = VehicleBookingSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(
+                {"message": "Vehicle Booking received successfully", "data": serializer.data},
                 status=status.HTTP_201_CREATED
             )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

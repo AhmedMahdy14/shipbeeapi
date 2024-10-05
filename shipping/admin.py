@@ -1,10 +1,11 @@
 from django.contrib import admin
+
 from .models import (
     FurnitureMovingModel,
     ShippingRequestModel,
     ConstructionRequestModel,
     PersonalShipmentModel,
-    CrossBorderFreightModel
+    CrossBorderFreightModel, VehicleBookingModel
 )
 
 
@@ -41,3 +42,10 @@ class CrossBorderFreightAdmin(admin.ModelAdmin):
     list_display = ("name", "phone_number", "material_type", "pickup_location", "drop_off_location", "weight")
     search_fields = ("name", "phone_number", "email")
     list_filter = ("material_type", "lifters_required")
+
+
+@admin.register(VehicleBookingModel)
+class VehicleBookingAdmin(admin.ModelAdmin):
+    list_display = ("name", "phone_number", "vehicle", "shipping_from", "shipping_to", "number_of_vehicle")
+    search_fields = ("name", "phone_number", "email")
+    list_filter = ("vehicle", "driver_required", "lifters_required")

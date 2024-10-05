@@ -170,3 +170,31 @@ class CrossBorderFreightModel(models.Model):
 
     def __str__(self):
         return f"{self.name} - {self.material_type}"
+
+
+class VehicleBookingModel(models.Model):
+    VEHICLE_TYPES = [
+        ("MotorCycle", "MotorCycle"),
+        ("Motorcycle", "Motorcycle"),
+        ("Sedan Car", "Sedan Car"),
+        ("Pickup Truck", "Pickup Truck"),
+        ("Low Bed Trailer", "Low Bed Trailer"),
+        ("Flat Bed Trailer", "Flat Bed Trailer"),
+        ("Chiller Truck", "Chiller Truck"),
+        ("Garbage Removal Truck", "Garbage Removal Truck"),
+        ("Canter Truck", "Canter Truck"),
+    ]
+
+    vehicle = models.CharField(max_length=50, choices=VEHICLE_TYPES)
+    number_of_vehicle = models.PositiveIntegerField()
+    driver_required = models.BooleanField()
+    lifters_required = models.BooleanField()
+    item_description = models.TextField()
+    shipping_from = models.CharField(max_length=100)
+    shipping_to = models.CharField(max_length=100)
+    name = models.CharField(max_length=80)
+    phone_number = models.CharField(max_length=20)
+    email = models.EmailField(max_length=120, blank=True, null=True)
+
+    def __str__(self):
+        return f"Booking for {self.name} - {self.vehicle}"
