@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-3vf26$$prq+f2s7tf0es&2q3m!i9u%(3tafox$&fs1(&tp27_9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -89,7 +89,7 @@ if os.environ.get('DATABASE_URL') is None:
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
-    
+
 # For Heroku, configure the database using dj_database_url
 
 # For Heroku, configure the database using dj_database_url
