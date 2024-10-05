@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class FurnitureMovingModel(models.Model):
+class FurnitureMoving(models.Model):
     HOME_TYPES = [
         ("Apartment", "Apartment"),
         ("Villa", "Villa"),
@@ -43,7 +43,7 @@ class FurnitureMovingModel(models.Model):
     furniture_types = models.CharField(max_length=100, choices=FURNITURE_TYPES, blank=True, null=True)
 
 
-class ShippingRequestModel(models.Model):
+class ShippingRequest(models.Model):
     COMMERCIAL_RETAIL_CHOICES = [
         ("Commercial", "Commercial"),
         ("Retail", "Retail"),
@@ -79,7 +79,7 @@ class ShippingRequestModel(models.Model):
     shipping_to = models.CharField(max_length=100)
 
 
-class ConstructionRequestModel(models.Model):
+class ConstructionRequest(models.Model):
     TRUCK_TYPES = [
         ("1 ton truck", "1 ton truck"),
         ("3 ton truck", "3 ton truck"),
@@ -114,7 +114,7 @@ class ConstructionRequestModel(models.Model):
     email = models.EmailField(max_length=120, blank=True, null=True)
 
 
-class PersonalShipmentModel(models.Model):
+class PersonalShipment(models.Model):
     VEHICLE_TYPES = [
         ("Car", "Car"),
         ("Motorbike", "Motorbike"),
@@ -145,7 +145,7 @@ class PersonalShipmentModel(models.Model):
         return f"{self.name} - {self.vehicle_type}"
 
 
-class CrossBorderFreightModel(models.Model):
+class CrossBorderFreight(models.Model):
     MATERIAL_TYPES = [
         ("Box", "Box"),
         ("Fragile", "Fragile"),
@@ -172,7 +172,7 @@ class CrossBorderFreightModel(models.Model):
         return f"{self.name} - {self.material_type}"
 
 
-class VehicleBookingModel(models.Model):
+class VehicleBooking(models.Model):
     VEHICLE_TYPES = [
         ("MotorCycle", "MotorCycle"),
         ("Motorcycle", "Motorcycle"),

@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
-from .models import FurnitureMovingModel, ShippingRequestModel, ConstructionRequestModel, PersonalShipmentModel, \
-    CrossBorderFreightModel, VehicleBookingModel
+from .models import FurnitureMoving, ShippingRequest, ConstructionRequest, PersonalShipment, \
+    CrossBorderFreight, VehicleBooking
 
 
 class FurnitureMovingSerializer(serializers.ModelSerializer):
@@ -19,7 +19,7 @@ class FurnitureMovingSerializer(serializers.ModelSerializer):
     )
 
     class Meta:
-        model = FurnitureMovingModel
+        model = FurnitureMoving
         fields = '__all__'
         extra_kwargs = {
             "name": {"required": True},
@@ -46,7 +46,7 @@ class ShippingRequestSerializer(serializers.ModelSerializer):
     )
 
     class Meta:
-        model = ShippingRequestModel
+        model = ShippingRequest
         fields = '__all__'
         extra_kwargs = {
             "name": {"required": True},
@@ -71,7 +71,7 @@ class ConstructionRequestSerializer(serializers.ModelSerializer):
     ])
 
     class Meta:
-        model = ConstructionRequestModel
+        model = ConstructionRequest
         fields = '__all__'
         extra_kwargs = {
             "name": {"required": True},
@@ -85,7 +85,7 @@ class ConstructionRequestSerializer(serializers.ModelSerializer):
 
 class PersonalShipmentSerializer(serializers.ModelSerializer):
     class Meta:
-        model = PersonalShipmentModel
+        model = PersonalShipment
         fields = '__all__'
         extra_kwargs = {
             # Required fields
@@ -104,7 +104,7 @@ class PersonalShipmentSerializer(serializers.ModelSerializer):
 
 class CrossBorderFreightSerializer(serializers.ModelSerializer):
     class Meta:
-        model = CrossBorderFreightModel
+        model = CrossBorderFreight
         fields = '__all__'
         extra_kwargs = {
             # Required fields
@@ -127,7 +127,7 @@ class CrossBorderFreightSerializer(serializers.ModelSerializer):
 
 class VehicleBookingSerializer(serializers.ModelSerializer):
     class Meta:
-        model = VehicleBookingModel
+        model = VehicleBooking
         fields = '__all__'
         extra_kwargs = {
             # Required fields
