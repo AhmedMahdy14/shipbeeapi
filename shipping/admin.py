@@ -5,7 +5,7 @@ from .models import (
     ShippingRequest,
     ConstructionRequest,
     PersonalShipment,
-    CrossBorderFreight, VehicleBooking
+    CrossBorderFreight, VehicleBooking, HomeType, FurnitureType, MaterialType, VehicleType
 )
 
 
@@ -18,16 +18,16 @@ class FurnitureMovingAdmin(admin.ModelAdmin):
 
 @admin.register(ShippingRequest)
 class ShippingRequestAdmin(admin.ModelAdmin):
-    list_display = ("name", "phone_number", "commercial_retail", "vehicle_type", "material_type")
+    list_display = ("name", "phone_number", "is_commercial", "vehicle_type", "material_type")
     search_fields = ("name", "phone_number", "email")
-    list_filter = ("commercial_retail", "vehicle_type", "material_type", "lifters_required")
+    list_filter = ("is_commercial", "vehicle_type", "material_type", "lifters_required")
 
 
 @admin.register(ConstructionRequest)
 class ConstructionRequestAdmin(admin.ModelAdmin):
-    list_display = ("name", "phone_number", "truck_type", "packing_type", "pickup_location", "drop_off_location")
+    list_display = ("name", "phone_number", "vehicle_type", "packing_type", "pickup_location", "drop_off_location")
     search_fields = ("name", "phone_number", "email")
-    list_filter = ("truck_type", "packing_type", "lifters_required")
+    list_filter = ("vehicle_type", "packing_type", "lifters_required")
 
 
 @admin.register(PersonalShipment)
@@ -46,6 +46,31 @@ class CrossBorderFreightAdmin(admin.ModelAdmin):
 
 @admin.register(VehicleBooking)
 class VehicleBookingAdmin(admin.ModelAdmin):
-    list_display = ("name", "phone_number", "vehicle", "shipping_from", "shipping_to", "number_of_vehicle")
+    list_display = ("name", "phone_number", "vehicle_type", "shipping_from", "shipping_to", "number_of_vehicle")
     search_fields = ("name", "phone_number", "email")
-    list_filter = ("vehicle", "driver_required", "lifters_required")
+    list_filter = ("vehicle_type", "driver_required", "lifters_required")
+
+
+class BaseTypeAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+    search_fields = ('name',)
+
+
+@admin.register(HomeType)
+class HomeTypeAdmin(BaseTypeAdmin):
+    pass
+
+
+@admin.register(FurnitureType)
+class FurnitureTypeAdmin(BaseTypeAdmin):
+    pass
+
+
+@admin.register(MaterialType)
+class MaterialTypeAdmin(BaseTypeAdmin):
+    pass
+
+
+@admin.register(VehicleType)
+class VehicleTypeAdmin(BaseTypeAdmin):
+    pass

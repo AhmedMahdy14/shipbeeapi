@@ -1,11 +1,35 @@
 from drf_yasg.utils import swagger_auto_schema
-from rest_framework import status
+from rest_framework import status, viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from .models import HomeType, FurnitureType, MaterialType, VehicleType
 from .serializers import FurnitureMovingSerializer, ShippingRequestSerializer, ConstructionRequestSerializer, \
-    VehicleBookingSerializer
+    VehicleBookingSerializer, HomeTypeSerializer, FurnitureTypeSerializer, MaterialTypeSerializer, VehicleTypeSerializer
 from .serializers import PersonalShipmentSerializer, CrossBorderFreightSerializer
+
+
+class HomeTypeViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = HomeType.objects.all()
+    serializer_class = HomeTypeSerializer
+
+
+# FurnitureType ViewSet
+class FurnitureTypeViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = FurnitureType.objects.all()
+    serializer_class = FurnitureTypeSerializer
+
+
+# MaterialType ViewSet
+class MaterialTypeViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = MaterialType.objects.all()
+    serializer_class = MaterialTypeSerializer
+
+
+# VehicleType ViewSet
+class VehicleTypeViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = VehicleType.objects.all()
+    serializer_class = VehicleTypeSerializer
 
 
 class FurnitureMovingRequest(APIView):

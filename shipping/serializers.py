@@ -1,7 +1,31 @@
 from rest_framework import serializers
 
 from .models import FurnitureMoving, ShippingRequest, ConstructionRequest, PersonalShipment, \
-    CrossBorderFreight, VehicleBooking
+    CrossBorderFreight, VehicleBooking, HomeType, FurnitureType, MaterialType, VehicleType
+
+
+class HomeTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = HomeType
+        fields = '__all__'
+
+
+class FurnitureTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FurnitureType
+        fields = '__all__'
+
+
+class MaterialTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MaterialType
+        fields = '__all__'
+
+
+class VehicleTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = VehicleType
+        fields = '__all__'
 
 
 class FurnitureMovingSerializer(serializers.ModelSerializer):
@@ -109,9 +133,9 @@ class CrossBorderFreightSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             # Required fields
             "material_type": {"required": True},
-            "shipment_length": {"required": True},
-            "shipment_width": {"required": True},
-            "shipment_height": {"required": True},
+            "length": {"required": True},
+            "width": {"required": True},
+            "height": {"required": True},
             "weight": {"required": True},
             "pickup_location": {"required": True},
             "drop_off_location": {"required": True},
@@ -132,7 +156,7 @@ class VehicleBookingSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             # Required fields
             "vehicle_type": {"required": True},
-            "number_of_vehicles": {"required": True},
+            "number_of_vehicle": {"required": True},
             "shipping_from": {"required": True},
             "shipping_to": {"required": True},
             "name": {"required": True},

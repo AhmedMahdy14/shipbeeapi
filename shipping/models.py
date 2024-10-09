@@ -1,7 +1,6 @@
 from django.db import models
 
-
-class FurnitureMoving(models.Model):
+'''
     HOME_TYPES = [
         ("Apartment", "Apartment"),
         ("Villa", "Villa"),
@@ -28,59 +27,18 @@ class FurnitureMoving(models.Model):
         ("Gaming Room", "Gaming Room"),
     ]
 
-    name = models.CharField(max_length=80)
-    phone_number = models.CharField(max_length=20)
-    email = models.EmailField(max_length=120, blank=True, null=True)
-    move_home = models.BooleanField()
-    home_type = models.CharField(max_length=50, choices=HOME_TYPES, blank=True, null=True)
-    request_visit = models.BooleanField(blank=True, null=True)
-    visit_date = models.DateField(blank=True, null=True)
-    visit_time = models.TimeField(blank=True, null=True)
-    address = models.CharField(max_length=200, blank=True, null=True)
-    image = models.CharField(max_length=255, blank=True, null=True)
-    shipping_from = models.CharField(max_length=100)
-    shipping_to = models.CharField(max_length=100)
-    furniture_types = models.CharField(max_length=100, choices=FURNITURE_TYPES, blank=True, null=True)
-
-
-class ShippingRequest(models.Model):
-    COMMERCIAL_RETAIL_CHOICES = [
-        ("Commercial", "Commercial"),
-        ("Retail", "Retail"),
-    ]
-
-    VEHICLE_TYPES = [
-        ("Car", "Car"),
-        ("Motorbike", "Motorbike"),
-        ("Pickup 2 Tons", "Pickup 2 Tons"),
-        ("Pickup 4 Tons", "Pickup 4 Tons"),
-        ("Van", "Van"),
-    ]
-
-    MATERIAL_TYPES = [
+    packing or MATERIAL TYPES = [
         ("Box", "Box"),
         ("Fragile", "Fragile"),
         ("Hazardous", "Hazardous"),
         ("Loose", "Loose"),
         ("Others", "Others"),
+        ("Pallet", "Pallet"),
+        ("Sacks", "Sacks"),
+        ("Drums", "Drums"),
     ]
-
-    name = models.CharField(max_length=80)
-    phone_number = models.CharField(max_length=20)
-    email = models.EmailField(max_length=120, blank=True, null=True)
-    commercial_retail = models.CharField(max_length=20, choices=COMMERCIAL_RETAIL_CHOICES)
-    vehicle_type = models.CharField(max_length=50, choices=VEHICLE_TYPES, blank=True, null=True)
-    material_type = models.CharField(max_length=50, choices=MATERIAL_TYPES)
-    brief_description = models.CharField(max_length=255)
-    pick_up_time = models.TimeField()
-    image = models.CharField(max_length=255, blank=True, null=True)
-    lifters_required = models.BooleanField()
-    shipping_from = models.CharField(max_length=100)
-    shipping_to = models.CharField(max_length=100)
-
-
-class ConstructionRequest(models.Model):
-    TRUCK_TYPES = [
+    
+     vehicle   TRUCK_TYPES = [
         ("1 ton truck", "1 ton truck"),
         ("3 ton truck", "3 ton truck"),
         ("4.2 ton truck", "4.2 ton truck"),
@@ -91,19 +49,78 @@ class ConstructionRequest(models.Model):
         ("13.6 M truck", "13.6 M truck"),
         ("Tipper truck", "Tipper truck"),
         ("15 M truck", "15 M truck"),
+        ("Car", "Car"),
+        ("Motorbike", "Motorbike"),
+        ("Pickup 2 Tons", "Pickup 2 Tons"),
+        ("Pickup 4 Tons", "Pickup 4 Tons"),
+        ("Van", "Van"),
     ]
 
-    PACKING_TYPES = [
-        ("Loose", "Loose"),
-        ("Box", "Box"),
-        ("Pallet", "Pallet"),
-        ("Sacks", "Sacks"),
-        ("Drums", "Drums"),
-        ("Others", "Others"),
-    ]
+    '''
 
-    truck_type = models.CharField(max_length=50, choices=TRUCK_TYPES)
-    packing_type = models.CharField(max_length=50, choices=PACKING_TYPES)
+
+class HomeType(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+
+    def __str__(self):
+        return self.name
+
+
+class FurnitureType(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+
+    def __str__(self):
+        return self.name
+
+
+class MaterialType(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+
+    def __str__(self):
+        return self.name
+
+
+class VehicleType(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+
+    def __str__(self):
+        return self.name
+
+
+class FurnitureMoving(models.Model):
+    name = models.CharField(max_length=80)
+    phone_number = models.CharField(max_length=20)
+    email = models.EmailField(max_length=120, blank=True, null=True)
+    move_home = models.BooleanField()
+    home_type = models.ForeignKey(HomeType, on_delete=models.SET_NULL, null=True, blank=True)
+    request_visit = models.BooleanField(blank=True, null=True)
+    visit_date = models.DateField(blank=True, null=True)
+    visit_time = models.TimeField(blank=True, null=True)
+    address = models.CharField(max_length=200, blank=True, null=True)
+    image = models.CharField(max_length=255, blank=True, null=True)
+    shipping_from = models.CharField(max_length=100)
+    shipping_to = models.CharField(max_length=100)
+    furniture_types = models.ForeignKey(FurnitureType, on_delete=models.SET_NULL, null=True, blank=True)
+
+
+class ShippingRequest(models.Model):
+    name = models.CharField(max_length=80)
+    phone_number = models.CharField(max_length=20)
+    email = models.EmailField(max_length=120, blank=True, null=True)
+    is_commercial = models.BooleanField()  # if false, it's retail.
+    vehicle_type = models.ForeignKey(VehicleType, on_delete=models.SET_NULL, null=True, blank=True)
+    material_type = models.ForeignKey(MaterialType, on_delete=models.SET_NULL, null=True, blank=True)
+    brief_description = models.CharField(max_length=255)
+    pick_up_time = models.TimeField()
+    image = models.CharField(max_length=255, blank=True, null=True)
+    lifters_required = models.BooleanField()
+    shipping_from = models.CharField(max_length=100)
+    shipping_to = models.CharField(max_length=100)
+
+
+class ConstructionRequest(models.Model):
+    vehicle_type = models.ForeignKey(VehicleType, on_delete=models.SET_NULL, null=True, blank=True)
+    packing_type = models.ForeignKey(MaterialType, on_delete=models.SET_NULL, null=True, blank=True)
     lifters_required = models.BooleanField()
     item_description = models.TextField()
     image = models.CharField(max_length=255, blank=True, null=True)
@@ -115,24 +132,8 @@ class ConstructionRequest(models.Model):
 
 
 class PersonalShipment(models.Model):
-    VEHICLE_TYPES = [
-        ("Car", "Car"),
-        ("Motorbike", "Motorbike"),
-        ("Pickup 2 Tons", "Pickup 2 Tons"),
-        ("Pickup 4 Tons", "Pickup 4 Tons"),
-        ("Van", "Van"),
-    ]
-
-    MATERIAL_TYPES = [
-        ("Box", "Box"),
-        ("Fragile", "Fragile"),
-        ("Hazardous", "Hazardous"),
-        ("Loose", "Loose"),
-        ("Others", "Others"),
-    ]
-
-    vehicle_type = models.CharField(max_length=50, choices=VEHICLE_TYPES)
-    material_type = models.CharField(max_length=50, choices=MATERIAL_TYPES)
+    vehicle_type = models.ForeignKey(VehicleType, on_delete=models.SET_NULL, null=True, blank=True)
+    material_type = models.ForeignKey(MaterialType, on_delete=models.SET_NULL, null=True, blank=True)
     item_description = models.TextField()
     image = models.CharField(max_length=255, blank=True, null=True)
     pickup_location = models.CharField(max_length=255)
@@ -146,15 +147,7 @@ class PersonalShipment(models.Model):
 
 
 class CrossBorderFreight(models.Model):
-    MATERIAL_TYPES = [
-        ("Box", "Box"),
-        ("Fragile", "Fragile"),
-        ("Hazardous", "Hazardous"),
-        ("Loose", "Loose"),
-        ("Others", "Others"),
-    ]
-
-    material_type = models.CharField(max_length=50, choices=MATERIAL_TYPES)
+    material_type = models.ForeignKey(MaterialType, on_delete=models.SET_NULL, null=True, blank=True)
     length = models.FloatField(help_text="Length in meters")
     width = models.FloatField(help_text="Width in meters")
     height = models.FloatField(help_text="Height in meters")
@@ -173,19 +166,7 @@ class CrossBorderFreight(models.Model):
 
 
 class VehicleBooking(models.Model):
-    VEHICLE_TYPES = [
-        ("MotorCycle", "MotorCycle"),
-        ("Motorcycle", "Motorcycle"),
-        ("Sedan Car", "Sedan Car"),
-        ("Pickup Truck", "Pickup Truck"),
-        ("Low Bed Trailer", "Low Bed Trailer"),
-        ("Flat Bed Trailer", "Flat Bed Trailer"),
-        ("Chiller Truck", "Chiller Truck"),
-        ("Garbage Removal Truck", "Garbage Removal Truck"),
-        ("Canter Truck", "Canter Truck"),
-    ]
-
-    vehicle = models.CharField(max_length=50, choices=VEHICLE_TYPES)
+    vehicle_type = models.ForeignKey(VehicleType, on_delete=models.SET_NULL, null=True, blank=True)
     number_of_vehicle = models.PositiveIntegerField()
     driver_required = models.BooleanField()
     lifters_required = models.BooleanField()
@@ -197,4 +178,4 @@ class VehicleBooking(models.Model):
     email = models.EmailField(max_length=120, blank=True, null=True)
 
     def __str__(self):
-        return f"Booking for {self.name} - {self.vehicle}"
+        return f"Booking for {self.name} - {self.vehicle_type}"

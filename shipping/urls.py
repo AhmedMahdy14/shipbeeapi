@@ -4,7 +4,8 @@ from drf_yasg.views import get_schema_view
 from rest_framework import permissions
 
 from .views import FurnitureMovingRequest, ShippingRequest, ConstructionRequest, PersonalShipmentRequest, \
-    CrossBorderFreightRequest, VehicleBookingRequest
+    CrossBorderFreightRequest, VehicleBookingRequest, VehicleTypeViewSet, MaterialTypeViewSet, FurnitureTypeViewSet, \
+    HomeTypeViewSet
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -19,7 +20,47 @@ schema_view = get_schema_view(
     permission_classes=(permissions.AllowAny,),
 )
 
+home_type_list = HomeTypeViewSet.as_view({
+    'get': 'list'
+})
+home_type_detail = HomeTypeViewSet.as_view({
+    'get': 'retrieve'
+})
+
+furniture_type_list = FurnitureTypeViewSet.as_view({
+    'get': 'list'
+})
+furniture_type_detail = FurnitureTypeViewSet.as_view({
+    'get': 'retrieve'
+})
+
+material_type_list = MaterialTypeViewSet.as_view({
+    'get': 'list'
+})
+material_type_detail = MaterialTypeViewSet.as_view({
+    'get': 'retrieve'
+})
+
+vehicle_type_list = VehicleTypeViewSet.as_view({
+    'get': 'list'
+})
+vehicle_type_detail = VehicleTypeViewSet.as_view({
+    'get': 'retrieve'
+})
+
 urlpatterns = [
+    path('api/home-types/', home_type_list, name='home-type-list'),
+    path('api/home-types/<int:pk>/', home_type_detail, name='home-type-detail'),
+
+    path('api/furniture-types/', furniture_type_list, name='furniture-type-list'),
+    path('api/furniture-types/<int:pk>/', furniture_type_detail, name='furniture-type-detail'),
+
+    path('api/material-types/', material_type_list, name='material-type-list'),
+    path('api/material-types/<int:pk>/', material_type_detail, name='material-type-detail'),
+
+    path('api/vehicle-types/', vehicle_type_list, name='vehicle-type-list'),
+    path('api/vehicle-types/<int:pk>/', vehicle_type_detail, name='vehicle-type-detail'),
+
     path('furniture-moving/', FurnitureMovingRequest.as_view(), name='furniture-moving'),
     path('shipping-request/', ShippingRequest.as_view(), name='shipping-request'),
     path('construction-request/', ConstructionRequest.as_view(), name='construction-request'),
