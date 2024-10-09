@@ -49,17 +49,17 @@ vehicle_type_detail = VehicleTypeViewSet.as_view({
 })
 
 urlpatterns = [
-    path('api/home-types/', home_type_list, name='home-type-list'),
-    path('api/home-types/<int:pk>/', home_type_detail, name='home-type-detail'),
+    path('home-types/', home_type_list, name='home-type-list'),
+    path('home-types/<int:pk>/', home_type_detail, name='home-type-detail'),
 
-    path('api/furniture-types/', furniture_type_list, name='furniture-type-list'),
-    path('api/furniture-types/<int:pk>/', furniture_type_detail, name='furniture-type-detail'),
+    path('furniture-types/', furniture_type_list, name='furniture-type-list'),
+    path('furniture-types/<int:pk>/', furniture_type_detail, name='furniture-type-detail'),
 
-    path('api/material-types/', material_type_list, name='material-type-list'),
-    path('api/material-types/<int:pk>/', material_type_detail, name='material-type-detail'),
+    path('material-types/', material_type_list, name='material-type-list'),
+    path('material-types/<int:pk>/', material_type_detail, name='material-type-detail'),
 
-    path('api/vehicle-types/', vehicle_type_list, name='vehicle-type-list'),
-    path('api/vehicle-types/<int:pk>/', vehicle_type_detail, name='vehicle-type-detail'),
+    path('vehicle-types/', vehicle_type_list, name='vehicle-type-list'),
+    path('vehicle-types/<int:pk>/', vehicle_type_detail, name='vehicle-type-detail'),
 
     path('furniture-moving/', FurnitureMovingRequest.as_view(), name='furniture-moving'),
     path('shipping-request/', ShippingRequest.as_view(), name='shipping-request'),
