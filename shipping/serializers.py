@@ -61,13 +61,6 @@ class FurnitureMovingSerializer(serializers.ModelSerializer):
 
 
 class ShippingRequestSerializer(serializers.ModelSerializer):
-    vehicle_type = serializers.ChoiceField(
-        choices=["Car", "Motorbike", "Pickup 2 Tons", "Pickup 4 Tons", "Van"], required=False
-    )
-    material_type = serializers.ChoiceField(
-        choices=["Box", "Fragile", "Hazardous", "Loose", "Others"]
-    )
-
     class Meta:
         model = ShippingRequest
         fields = '__all__'
