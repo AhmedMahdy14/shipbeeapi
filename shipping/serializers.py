@@ -61,7 +61,6 @@ class FurnitureMovingSerializer(serializers.ModelSerializer):
 
 
 class ShippingRequestSerializer(serializers.ModelSerializer):
-    commercial_retail = serializers.ChoiceField(choices=["Commercial", "Retail"])
     vehicle_type = serializers.ChoiceField(
         choices=["Car", "Motorbike", "Pickup 2 Tons", "Pickup 4 Tons", "Van"], required=False
     )
@@ -75,7 +74,7 @@ class ShippingRequestSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             "name": {"required": True},
             "phone_number": {"required": True},
-            "commercial_retail": {"required": True},
+            "is_commercial": {"required": True},
             "material_type": {"required": True},
             # Optional fields
             "email": {"required": False},
