@@ -41,10 +41,12 @@ INSTALLED_APPS = [
     'rest_framework',
     'drf_yasg',
     'shipping',
+    'corsheaders',
+
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -56,6 +58,11 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'shipbee.urls'
+
+CORS_ALLOWED_ORIGINS = [
+    'https://www.shipbee.io',
+]
+CORS_ALLOW_ALL_ORIGINS = True
 
 TEMPLATES = [
     {
